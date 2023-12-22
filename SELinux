@@ -1,0 +1,92 @@
+SELinux --> Security Enhanced Linux  
+what is mean by the SELinux?
+
+The word Enhanced means (Improvement).
+
+If we already have the Firewall why SELinux?
+or 
+If we already have the SElinux why Firewall?
+
+
+we can enble from the below levels:
+1. Port Level 
+2. Service Level 
+3. File Level
+SELinux can provide 3 layers of security but the Firewall can only provide port level.
+
+SELinux has 3 Modes:
+1. Enforcing - Enabled
+2. Permissive - Not Disbled
+3. Diabled - Off
+
+let disscuess what does mean by this 3 modes.
+how does this 3 modes can help the system.
+
+cat /etc/selinux/config
+
+
+[root@arlrmvtestt05 ~]# cat /etc/selinux/config
+
+# This file controls the state of SELinux on the system.
+# SELINUX= can take one of these three values:
+#     enforcing - SELinux security policy is enforced. -->    It is looking for all the resources are targeted any of the file level times are not matched then it blocks the services it does not allow any other user to come inside and access that services.
+#     permissive - SELinux prints warnings instead of enforcing.  --> It does not restrict the user it allow but records the info the log just it report
+#     disabled - No SELinux policy is loaded.
+SELINUX=disabled
+# SELINUXTYPE= can take one of these three values:
+#     targeted - Targeted processes are protected,
+#     minimum - Modification of targeted policy. Only selected processes are protected.
+#     mls - Multi Level Security protection.
+SELINUXTYPE=targeted  
+
+
+
+context
+
+ls -ldZ
+ls -lZ
+
+[root@arlrmvtestt05 ~]# cat /etc/selinux/targeted/setrans.conf
+#
+# Multi-Category Security translation table for SELinux
+#
+# Uncomment the following to disable translation libary
+# disable=1
+#
+# Objects can be categorized with 0-1023 categories defined by the admin.
+# Objects can be in more than one category at a time.
+# Categories are stored in the system as c0-c1023.  Users can use this
+# table to translate the categories into a more meaningful output.
+# Examples:
+# s0:c0=CompanyConfidential
+# s0:c1=PatientRecord
+# s0:c2=Unclassified
+# s0:c3=TopSecret
+# s0:c1,c3=CompanyConfidentialRedHat
+s0=SystemLow
+s0-s0:c0.c1023=SystemLow-SystemHigh
+s0:c0.c1023=SystemHigh
+[root@arlrmvtestt05 ~]#
+
+[root@arlrmvtestt05 ~]# getenforce  --> it will show the status of current mode.
+Disabled
+[root@arlrmvtestt05 ~]#
+
+[root@arlrmvtestt05 ~]# sestatus  --> it will show the detail status of current mode.
+SELinux status:                 disabled
+[root@arlrmvtestt05 ~]#
+
+setenforce 0  --> permissive
+
+setenforce 1 --> enforcing
+
+
+
+
+
+
+
+
+
+
+
